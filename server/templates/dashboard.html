@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency Marekt Mood Index</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family:'Open Sans',sans-serif;
+		min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    h1 {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .marketSentiment {
+        width: 100%;
+        max-width: 630px;
+        padding: 0 20px;
+    }
+
+    .cryptoName {
+        font-size: 15px;
+        font-weight: 700;
+        margin: 34px 0;
+    }
+
+    .progressBar {
+        height: 45px;
+        background: linear-gradient(to right, #ff4111, #ffe608, #86ff15);
+        border-radius: 10px;
+    }
+    .progressBarBitcoin {
+        height: 20px;
+        background: linear-gradient(to right, #ff4111, #ffe608, #86ff15);
+        border-radius: 10px;
+    }
+
+    .progressBarEther {
+        height: 20px;
+        background: linear-gradient(to right, #ff4111, #ffe608, #86ff15);
+        border-radius: 10px;
+    }
+
+    .progressBarBnb {
+        height: 20px;
+        background: linear-gradient(to right, #ff4111, #ffe608, #86ff15);
+        border-radius: 10px;
+    }
+
+    .progressBarDoge {
+        height: 20px;
+        background: linear-gradient(to right, #ff4111, #ffe608, #86ff15);
+        border-radius: 10px;
+    }
+
+    .progressBarShib {
+        height: 20px;
+        background: linear-gradient(to right, #ff4111, #ffe608, #86ff15);
+        border-radius: 10px;
+    }
+
+    .progressBar__fill {
+        
+        height: 100%;
+        box-shadow: 3px 0px 3px -0.5px #a0a0a0, 0 2px 5px #a0a0a0;
+        border-radius: 10px 0px 0px 10px;
+        position: relative;
+        transition: all 1s;
+    }
+
+    .progressBar__value {
+        position: absolute;
+        padding: 4px 4px;
+        background-color: #363636;
+        color: blanchedalmond;
+        font-size: 11px;
+        border-radius: 4px;
+        top: -35px;
+        right: 0;
+        transform: translateX(50%);
+    }
+
+    .progressBar__value::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #363636;
+        top: 15px;
+        right: 50%;
+        transform: translateX(50%) rotate(45deg);
+        border-radius: 2px;
+    }
+</style>
+
+<body>
+    <div class="marketSentiment">
+        <h1 id="title" style="text-align: center; width: 100;">Cryptocurrency Market Mood Index</h1>
+        
+        <div class="cryptoName"><h3 style="text-align: center; margin-top: -10px;">Know what's the sentiment in the Cryptocurrency Market today</h3></div>
+        
+        <div class="progressBar">
+            
+            <div class="progressBar__fill">
+                <div class="progressBar__value"></div>
+            </div>
+        </div>
+        <hr>
+
+        <h3 style="text-align: center;"> Market Mood Index for Individual Cryptocurrencies </h3>
+        <hr>
+        <div class="cryptoName">Bitcoin</div>
+        <div class="progressBarBitcoin">
+             
+            <div class="progressBar__fill">
+                <div class="progressBar__value"></div>
+            </div>
+        </div>
+
+        <div class="cryptoName">Ether</div>
+        <div class="progressBarEther">
+            
+            <div class="progressBar__fill">
+                <div class="progressBar__value"></div>
+            </div>
+        </div>
+
+        <div class="cryptoName">Binance</div>
+        <div class="progressBarBnb">
+            
+            <div class="progressBar__fill">
+                <div class="progressBar__value"></div>
+            </div>
+        </div>
+
+        <div class="cryptoName">Dogecoin</div>
+        <div class="progressBarDoge">
+            
+            <div class="progressBar__fill">
+                <div class="progressBar__value"></div>
+            </div>
+        </div>
+
+        <div class="cryptoName">Shiba-Inu</div>
+        <div class="progressBarShib">
+            
+            <div class="progressBar__fill">
+                <div class="progressBar__value"></div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+<script type="text/javascript">
+    class ProgressBar {
+        constructor (element, initialValue = 0.0) {
+            this.valueElem = element.querySelector('.progressBar__value');
+            this.fillElem = element.querySelector('.progressBar__fill');
+
+            this.setValue(initialValue);
+        }
+
+        setValue (newValue) {
+
+            this.value = newValue;
+            this.update();
+        }
+
+        update () {
+            const percentage = this.value;
+            var x;
+            if (this.value < 25) {
+                x = "Extreme Fear"
+            }
+            else if (this.value < 49.5 && this.value > 25.1) {
+                x = "Fear"
+            }
+            else if (this.value > 49.5 && this.value < 50.5) {
+                x = "Neutral"
+            }
+            else if (this.value < 75 && this.value > 50.5) {
+                x = "Greed"
+            }
+            else {
+                x = "Extreme Greed"
+            }
+
+            this.fillElem.style.width = percentage + '%';
+            this.valueElem.textContent = percentage + ', ' + x;
+        }
+    }
+
+    var total_mmi = '{{total_mmi}}';
+    var btc_mmi = '{{btc_mmi}}';
+    var eth_mmi = '{{eth_mmi}}';
+    var bnb_mmi = '{{bnb_mmi}}';
+    var doge_mmi = '{{shib_mmi}}';
+    var shib_mmi = '{{doge_mmi}}';
+
+    const pbForMMI = new ProgressBar(document.querySelector('.progressBar'), (total_mmi * 100).toFixed(2));
+
+    const pbForCrypto1 = new ProgressBar(document.querySelector('.progressBarBitcoin'), (btc_mmi * 100).toFixed(2));
+
+    const pbForCrypto2 = new ProgressBar(document.querySelector('.progressBarEther'), (eth_mmi * 100).toFixed(2));
+
+    const pbForCrypto3 = new ProgressBar(document.querySelector('.progressBarBnb'), (bnb_mmi * 100).toFixed(2));
+
+    const pbForCrypto4 = new ProgressBar(document.querySelector('.progressBarDoge'), (doge_mmi * 100).toFixed(2));
+
+    const pbForCrypto5 = new ProgressBar(document.querySelector('.progressBarShib'), (shib_mmi * 100).toFixed(2));
+
+</script>
+</html>
+
+
+
+
+<!-- to run the program in console of inspect element
+pbForMMI.setValue(91)
+
+pbForCrypto1.setValue(97)
+
+and so on,
+will dynamically change the values according to setValue data.
+-->
